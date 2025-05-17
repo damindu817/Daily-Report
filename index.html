@@ -413,7 +413,7 @@
                     <div class="input-highlight"></div>
                 </div>
                 <div class="form-group">
-                    <label for="registration">Registration</label>
+                    <label for="registration">Registrations</label>
                     <input type="number" id="registration" min="0" placeholder="Enter number" pattern="[0-9]*" inputmode="numeric">
                     <div class="input-highlight"></div>
                 </div>
@@ -613,7 +613,12 @@
             const riderFootfall = parseInt(document.getElementById('rider-footfall').value) || 0;
             const govtFootfall = parseInt(document.getElementById('govt-footfall').value) || 0;
             const vendorFootfall = parseInt(document.getElementById('vendor-footfall').value) || 0;
-            const visitorTotal = appointments + nonAppointments + registration + riderFootfall + govtFootfall + vendorFootfall;
+            
+            // Calculate derived values
+            const nonAppointmentWalkins = nonAppointments + registration;
+            const visitorsTotal = riderFootfall + vendorFootfall;
+            const footfallTotal = appointments + nonAppointments + registration + riderFootfall + govtFootfall + vendorFootfall;
+            const total = staffTotal + footfallTotal;
             
             // Report details
             const securityNotes = document.getElementById('security').value || 'Nothing to report';
@@ -625,10 +630,6 @@
             const includeNonApptFootfall = document.getElementById('include-non-appt-footfall').checked;
             const nonApptFootfall = includeNonApptFootfall ? (parseInt(document.getElementById('non-appt-footfall').value) || 0) : 0;
             
-            // Calculate derived values
-            const nonAppointmentWalkins = nonAppointments + registration;
-            const total = staffTotal + visitorTotal;
-            
             // Generate main report text
             let reportText = `Daily Report :-\n\n`;
             reportText += `${reportDate}\n\n`;
@@ -639,11 +640,9 @@
             reportText += `RTW Staff : ${fte.toString().padStart(2, '0')} FTE , ${ext.toString().padStart(2, '0')} EXT, ${hk.toString().padStart(2, '0')} HK , ${sec.toString().padStart(2, '0')} SO\n\n`;
             reportText += `Appointment walkins : ${appointments.toString().padStart(2, '0')}\n\n`;
             reportText += `Non Appointment Walkins : ${nonAppointmentWalkins}\n\n`;
-            reportText += `Rider issues (Lost items / Complain) : ${riderFootfall.toString().padStart(2, '0')}\n\n`;
-            reportText += `Govt/Regulatory/LEA related footfall : ${govtFootfall.toString().padStart(2, '0')}\n\n`;
-            reportText += `Visitor/Non-site Vendor/Maintenance team footfall : ${vendorFootfall.toString().padStart(2, '0')}\n\n`;
+            reportText += `Visitors : ${visitorsTotal.toString().padStart(2, '0')}\n\n`;
             reportText += `Registrations : ${registration.toString().padStart(2, '0')}\n\n`;
-            reportText += `Total footfall : ${visitorTotal}\n\n`;
+            reportText += `Total footfall : ${footfallTotal}\n\n`;
             reportText += `Total : ${total}\n\n`;
             reportText += `Notes : ${additionalNotes}\n\n`;
             reportText += `Thanks\n\n`;
@@ -654,15 +653,15 @@
             let footfallText = `${reportDate}\n`;
             footfallText += `Footfall Count data\n`;
             footfallText += `Colombo \n\n`;
-            footfallText += `FTE: ${fte.toString().padStart(2, '0')}\n`;
-            footfallText += `EXT: ${ext.toString().padStart(2, '0')}\n`;
-            footfallText += `GL(appt footfall): ${appointments.toString().padStart(2, '0')}\n`;
-            footfallText += `GL (Non appt footfall regd at site): ${nonAppointmentWalkins}\n`;
-            footfallText += `GL (Non Appt footfall): ${nonApptFootfall.toString().padStart(2, '0')}\n`;
-            footfallText += `Rider issues (Lost items / Complain): ${riderFootfall.toString().padStart(2, '0')}\n`;
-            footfallText += `Govt/Regulatory/LEA related footfall: ${govtFootfall.toString().padStart(2, '0')}\n`;
-            footfallText += `Visitor / Non site Vendor/Maintenance team footfall: ${vendorFootfall.toString().padStart(2, '0')}\n`;
-            footfallText += `Any other: ${otherFootfall}`;
+            footfallText += `FTE : ${fte.toString().padStart(2, '0')}\n`;
+            footfallText += `EXT : ${ext.toString().padStart(2, '0')}\n`;
+            footfallText += `GL(appt footfall) : ${appointments.toString().padStart(2, '0')}\n`;
+            footfallText += `GL (Non appt footfall regd at site) : ${nonAppointmentWalkins}\n`;
+            footfallText += `GL (Non Appt footfall) : ${nonApptFootfall.toString().padStart(2, '0')}\n`;
+            footfallText += `Rider issue footfall : ${riderFootfall.toString().padStart(2, '0')}\n`;
+            footfallText += `Govt/Regulatory/LEA related footfall : ${govtFootfall.toString().padStart(2, '0')}\n`;
+            footfallText += `Visitor / Non site Vendor/Maintenance team footfall : ${vendorFootfall.toString().padStart(2, '0')}\n`;
+            footfallText += `Any other : ${otherFootfall}`;
             
             // Display reports
             document.getElementById('report-output').textContent = reportText;
@@ -675,18 +674,20 @@
         
         function shareDailyReportViaWhatsApp() {
             const reportText = document.getElementById('report-output').textContent;
+            const phoneNumber = '94779688777';
             
             // Encode the text while preserving the exact formatting
             const formattedText = reportText.replace(/\n/g, '%0A');
-            window.open(`https://wa.me/?text=${formattedText}`);
+            window.open(`https://wa.me/${phoneNumber}?text=${formattedText}`);
         }
         
         function shareFootfallDataViaWhatsApp() {
             const footfallText = document.getElementById('footfall-output').textContent;
+            const phoneNumber = '94779688777';
             
             // Encode the text while preserving the exact formatting
             const formattedText = footfallText.replace(/\n/g, '%0A');
-            window.open(`https://wa.me/?text=${formattedText}`);
+            window.open(`https://wa.me/${phoneNumber}?text=${formattedText}`);
         }
         
         function clearForm() {
@@ -715,4 +716,4 @@
         }
     </script>
 </body>
-    </html>
+</html>
