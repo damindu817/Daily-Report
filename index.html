@@ -615,7 +615,6 @@
             const vendorFootfall = parseInt(document.getElementById('vendor-footfall').value) || 0;
             
             // Calculate derived values
-            const nonAppointmentWalkins = nonAppointments + registration;
             const visitorsTotal = riderFootfall + vendorFootfall;
             const footfallTotal = appointments + nonAppointments + registration + riderFootfall + govtFootfall + vendorFootfall;
             const total = staffTotal + footfallTotal;
@@ -639,7 +638,7 @@
             reportText += `Incident : ${incidents.toString().padStart(2, '0')}\n\n`;
             reportText += `RTW Staff : ${fte.toString().padStart(2, '0')} FTE , ${ext.toString().padStart(2, '0')} EXT , ${hk.toString().padStart(2, '0')} HK , ${sec.toString().padStart(2, '0')} SO\n\n`;
             reportText += `Appointment walkins : ${appointments.toString().padStart(2, '0')}\n\n`;
-            reportText += `Non Appointment Walkins : ${nonAppointmentWalkins}\n\n`;
+            reportText += `Non Appointment Walkins : ${nonAppointments.toString().padStart(2, '0')}\n\n`;  // Changed this line
             reportText += `Visitors : ${visitorsTotal.toString().padStart(2, '0')}\n\n`;
             reportText += `Registrations : ${registration.toString().padStart(2, '0')}\n\n`;
             reportText += `Total footfall : ${footfallTotal}\n\n`;
@@ -656,7 +655,7 @@
             footfallText += `FTE : ${fte.toString().padStart(2, '0')}\n`;
             footfallText += `EXT : ${ext.toString().padStart(2, '0')}\n`;
             footfallText += `GL(appt footfall) : ${appointments.toString().padStart(2, '0')}\n`;
-            footfallText += `GL (Non appt footfall regd at site) : ${nonAppointmentWalkins}\n`;
+            footfallText += `GL (Non appt footfall regd at site) : ${nonAppointments.toString().padStart(2, '0')}\n`;  // Changed this line
             footfallText += `GL (Non Appt footfall) : ${nonApptFootfall.toString().padStart(2, '0')}\n`;
             footfallText += `Rider issue footfall : ${riderFootfall.toString().padStart(2, '0')}\n`;
             footfallText += `Govt/Regulatory/LEA related footfall : ${govtFootfall.toString().padStart(2, '0')}\n`;
